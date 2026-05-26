@@ -1,0 +1,93 @@
+.hero {
+  padding-block: clamp(3rem, 8vw, 6rem);
+  background: linear-gradient(
+    135deg,
+    var(--color-cream) 0%,
+    var(--color-beige) 55%,
+    rgb(122 158 126 / 15%) 100%
+  );
+}
+
+.inner {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.eyebrow {
+  font-family: var(--font-heading), "Poppins", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  max-width: 18ch;
+}
+
+.description {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: rgb(75 56 50 / 85%);
+  max-width: 48ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.visual {
+  display: grid;
+  gap: 1rem;
+  min-height: 16rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: 1.5rem;
+  min-height: 9rem;
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgb(122 158 126 / 20%);
+}
+
+.cardAccent {
+  background: var(--color-sage);
+  color: var(--color-cream);
+  margin-left: 2rem;
+}
+
+.cardLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.cardTitle {
+  font-family: var(--font-heading), "Poppins", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+}

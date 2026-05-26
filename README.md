@@ -66,15 +66,52 @@ This project is being developed as part of a group assignment. The main goal is 
 
 ---
 
+##  Getting Started
+
+This project uses [Next.js](https://nextjs.org) with TypeScript, ESLint, and the App Router (`src/` directory). Tailwind CSS is not included yet and can be added later if the team chooses.
+
+### Prerequisites
+
+- Node.js 18+
+- [pnpm](https://pnpm.io)
+
+### Local Development
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view the landing page.
+
+### Other Commands
+
+```bash
+pnpm lint    # Run ESLint
+pnpm build   # Create a production build
+pnpm start   # Serve the production build
+```
+
+### Landing Page Sections
+
+- **Hero** — project tagline and primary calls to action
+- **Features** — planned platform capabilities from the team design
+- **Featured Products** — sample product cards with placeholder artwork
+- **Seller Spotlight** — introduction for independent artisans
+- **Call to Action** — closing prompt to explore handcrafted goods
+
+---
+
 ##  Work in Progress
 
 - Repository setup and team onboarding
-- Project structure initialization (Next.js)
-- UI design planning
-- Initial component architecture
+- ~~Project structure initialization (Next.js)~~
+- Initial landing page implementation
+- UI design planning for product and seller pages
+- Initial component architecture for upcoming features
 
 ---
 
 ##  Status
 
-This project is currently in the **initial setup and planning phase**.
+The project has moved into **early development**. The Next.js application is initialized and the initial responsive landing page is in place using the team design theme (colors, typography, and layout).
