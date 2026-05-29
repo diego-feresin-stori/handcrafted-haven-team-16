@@ -6,10 +6,44 @@
   color: var(--color-brown);
 }
 
+.breadcrumb {
+  padding: 1rem 0;
+  background: rgb(255 253 248 / 64%);
+  border-bottom: 1px solid rgb(75 56 50 / 8%);
+  font-size: 0.95rem;
+}
+
+.breadcrumb a {
+  color: var(--color-sage);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb span {
+  color: rgb(75 56 50 / 40%);
+  margin: 0 0.5rem;
+}
+
+.breadcrumb .current {
+  color: var(--color-brown);
+  font-weight: 600;
+}
+
 .hero {
   position: relative;
   overflow: hidden;
   padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2rem, 4vw, 3rem);
+}
+
+.heroBanner {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.12;
 }
 
 .heroGlow {
@@ -105,6 +139,24 @@
   letter-spacing: 0.04em;
 }
 
+.ratingBlock {
+  padding: 0.75rem 0;
+  border-top: 1px solid rgb(255 253 248 / 12%);
+  border-bottom: 1px solid rgb(255 253 248 / 12%);
+}
+
+.stars {
+  color: #FFD700;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+}
+
+.ratingText {
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  color: rgb(255 253 248 / 92%);
+}
+
 .summaryGrid {
   display: grid;
   gap: 1rem;
@@ -150,6 +202,29 @@
   border-radius: var(--radius-md);
   background: rgb(255 253 248 / 10%);
   line-height: 1.5;
+}
+
+.contactButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  margin-top: 0.5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-terracotta);
+  color: var(--color-cream);
+  font-family: var(--font-heading), "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.contactButton:hover {
+  background: #b56a54;
 }
 
 .productsSection {
@@ -206,6 +281,19 @@
   height: 100%;
 }
 
+.cardLink {
+  display: flex;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cardLink:hover .cardArticle {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgb(75 56 50 / 16%);
+}
+
 .cardArticle {
   display: flex;
   flex-direction: column;
@@ -215,6 +303,7 @@
   border-radius: var(--radius-lg);
   background: var(--color-cream);
   box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .imageWrap {
@@ -235,6 +324,7 @@
   display: grid;
   gap: 0.4rem;
   padding: 1.25rem;
+  flex-grow: 1;
 }
 
 .category {
@@ -255,6 +345,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   margin-top: 0.35rem;
+  margin-top: auto;
 }
 
 .price {
@@ -262,7 +353,7 @@
   font-weight: 600;
 }
 
-.rating {
+.productRating {
   color: var(--color-terracotta);
   font-size: 0.92rem;
   font-weight: 700;
@@ -283,4 +374,16 @@
 .emptyState p {
   max-width: 62ch;
   color: rgb(75 56 50 / 82%);
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.reviewsSection {
+  padding: 1.25rem;
+  border-top: 1px solid rgb(75 56 50 / 8%);
+  background: rgb(255 253 248 / 30%);
 }

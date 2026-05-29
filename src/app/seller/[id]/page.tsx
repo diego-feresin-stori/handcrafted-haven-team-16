@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { featuredProducts } from "@/lib/placeholder-products";
+import ProductCard from "./components/ProductCard";
 import styles from "./sellerProfile.module.css";
 
 type SellerProfile = {
@@ -15,6 +15,10 @@ type SellerProfile = {
   specialties: string[];
   values: string[];
   initials: string;
+  bannerColor: string;
+  rating: number;
+  reviewCount: number;
+  contactEmail?: string;
 };
 
 const sellerProfiles: Record<string, SellerProfile> = {
@@ -37,6 +41,10 @@ const sellerProfiles: Record<string, SellerProfile> = {
       "Thoughtful finishing",
     ],
     initials: "EM",
+    bannerColor: "linear-gradient(135deg, #C97B63 0%, #E8A99B 100%)",
+    rating: 4.9,
+    reviewCount: 287,
+    contactEmail: "elena@ceramicstudio.local",
   },
   "2": {
     name: "Marcus Vale",
@@ -57,6 +65,10 @@ const sellerProfiles: Record<string, SellerProfile> = {
       "Personalized details",
     ],
     initials: "MV",
+    bannerColor: "linear-gradient(135deg, #8B6F47 0%, #B8956A 100%)",
+    rating: 4.8,
+    reviewCount: 312,
+    contactEmail: "marcus@leathercraft.local",
   },
   "3": {
     name: "Asha Linden",
@@ -73,24 +85,12 @@ const sellerProfiles: Record<string, SellerProfile> = {
     ],
     values: ["Heirloom quality", "Organic textures", "Honest material stories"],
     initials: "AL",
+    bannerColor: "linear-gradient(135deg, #7A9E7E 0%, #A8C9A4 100%)",
+    rating: 4.95,
+    reviewCount: 451,
+    contactEmail: "asha@woodfiberarts.local",
   },
 };
-
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 0,
-});
-
-type SellerPageProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
-
-function formatPrice(price: number) {
-  return currencyFormatter.format(price);
-}
 
 function getSellerProducts(sellerId: string) {
   return featuredProducts.filter((product) => product.sellerId === sellerId);
@@ -99,6 +99,12 @@ function getSellerProducts(sellerId: string) {
 export function generateStaticParams() {
   return Object.keys(sellerProfiles).map((id) => ({ id }));
 }
+
+type SellerPageProps = {
+  params: Promise<{
+    id: string;
+  }>;
+};
 
 export async function generateMetadata({
   params,
@@ -130,7 +136,22 @@ export default async function SellerProfilePage({ params }: SellerPageProps) {
 
   return (
     <main id="main-content" className={styles.page}>
+      <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+        <div className="container">
+          <Link href="/">Home</Link>
+          <span>/</span>
+          <Link href="/#sellers">Artisans</Link>
+          <span>/</span>
+          <span className={styles.current}>{seller.name}</span>
+        </div>
+      </nav>
+
       <section className={styles.hero} aria-labelledby="seller-profile-heading">
+        <div
+          className={styles.heroBanner}
+          style={{ background: seller.bannerColor }}
+          aria-hidden="true"
+        />
         <div className={styles.heroGlow} aria-hidden="true" />
         <div className={`container ${styles.heroLayout}`}>
           <div className={styles.heroContent}>
@@ -157,6 +178,13 @@ export default async function SellerProfilePage({ params }: SellerPageProps) {
           >
             <div className={styles.avatar} aria-hidden="true">
               <span>{seller.initials}</span>
+            </div>
+
+            <div className={styles.ratingBlock}>
+              <span className={styles.stars}>★★★★★</span>
+              <p className={styles.ratingText}>
+                {seller.rating.toFixed(1)} ({seller.reviewCount} reviews)
+              </p>
             </div>
 
             <dl className={styles.summaryGrid}>
@@ -186,6 +214,13 @@ export default async function SellerProfilePage({ params }: SellerPageProps) {
                 ))}
               </ul>
             </div>
+
+            <a
+              href={`mailto:${seller.contactEmail}`}
+              className={styles.contactButton}
+            >
+              Contact artisan
+            </a>
           </aside>
         </div>
       </section>
@@ -216,32 +251,11 @@ export default async function SellerProfilePage({ params }: SellerPageProps) {
           {sellerProducts.length > 0 ? (
             <ul className={styles.grid} aria-label={`${seller.name} products`}>
               {sellerProducts.map((product) => (
-                <li key={product.id} className={styles.card}>
-                  <article className={styles.cardArticle}>
-                    <div className={styles.imageWrap}>
-                      <Image
-                        src={product.image}
-                        alt={product.alt}
-                        width={400}
-                        height={320}
-                        className={styles.image}
-                      />
-                    </div>
-                    <div className={styles.cardBody}>
-                      <p className={styles.category}>{product.category}</p>
-                      <h3 className={styles.productName}>{product.name}</h3>
-                      <div className={styles.meta}>
-                        <span className={styles.price}>{formatPrice(product.price)}</span>
-                        <span
-                          className={styles.rating}
-                          aria-label={`Rated ${product.rating.toFixed(1)} out of 5`}
-                        >
-                          {product.rating.toFixed(1)} / 5
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </li>
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  sellerId={id}
+                />
               ))}
             </ul>
           ) : (
