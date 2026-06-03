@@ -1,0 +1,93 @@
+.container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgb(75 56 50 / 10%);
+  border-radius: var(--radius-lg);
+  background: rgb(255 253 248 / 50%);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(75 56 50 / 10%);
+}
+
+.header h3 {
+  font-size: 1.15rem;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.average {
+  font-weight: 700;
+  color: var(--color-terracotta);
+  font-size: 1.1rem;
+}
+
+.count {
+  color: rgb(75 56 50 / 70%);
+  font-size: 0.9rem;
+}
+
+.loading,
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: rgb(75 56 50 / 60%);
+}
+
+.reviewList {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+}
+
+.review {
+  padding: 1rem;
+  border: 1px solid rgb(75 56 50 / 8%);
+  border-radius: var(--radius-md);
+  background: var(--color-cream);
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.author {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: rgb(75 56 50 / 60%);
+}
+
+.rating {
+  display: flex;
+  gap: 0.2rem;
+  font-size: 1rem;
+}
+
+.starFilled {
+  color: var(--color-terracotta);
+}
+
+.starEmpty {
+  color: rgb(75 56 50 / 15%);
+}
+
+.comment {
+  line-height: 1.6;
+  color: rgb(75 56 50 / 85%);
+}
