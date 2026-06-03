@@ -1,10 +1,5 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import ReviewForm from "./ReviewForm";
-import ReviewList from "./ReviewList";
 import styles from "../sellerProfile.module.css";
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -31,8 +26,6 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const [reviewTrigger, setReviewTrigger] = useState(0);
-
   return (
     <li className={styles.cardContainer}>
       <Link href={`/product/${product.id}`} className={styles.cardLink}>
@@ -59,20 +52,15 @@ export default function ProductCard({ product }: ProductCardProps) {
                     : "No ratings yet"
                 }
               >
-                {product.avg_rating !== null ? `${product.avg_rating.toFixed(1)} / 5` : "No ratings"}
+                {product.avg_rating !== null
+                  ? `${product.avg_rating.toFixed(1)} / 5`
+                  : "No ratings"}
               </span>
             </div>
+            <span className={styles.reviewsLink}>View reviews →</span>
           </div>
         </article>
       </Link>
-
-      <div className={styles.reviewsSection}>
-        <ReviewForm
-          productId={product.id}
-          onReviewAdded={() => setReviewTrigger((t) => t + 1)}
-        />
-        <ReviewList productId={product.id} refreshTrigger={reviewTrigger} />
-      </div>
     </li>
   );
 }

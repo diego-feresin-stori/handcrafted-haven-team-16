@@ -8,16 +8,25 @@ type ReviewFormProps = {
   onReviewAdded: () => void;
 };
 
-export default function ReviewForm({
-  productId,
-  onReviewAdded,
-}: ReviewFormProps) {
+const RATING_LABELS = ["Terrible", "Bad", "Okay", "Good", "Excellent"];
+
+export default function ReviewForm({ productId, onReviewAdded }: ReviewFormProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
+  const [hovered, setHovered] = useState(0);
+  const [poppingStars, setPoppingStars] = useState<Set<number>>(new Set());
   const [author, setAuthor] = useState("");
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  const handleStarClick = (star: number) => {
+    setRating(star);
+    setPoppingStars(new Set([star]));
+    setTimeout(() => setPoppingStars(new Set()), 400);
+  };
+
+  const activeLevel = hovered || rating;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +36,10 @@ export default function ReviewForm({
       setError("Please enter your name");
       return;
     }
+    if (rating === 0) {
+      setError("Please select a rating");
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -34,12 +47,7 @@ export default function ReviewForm({
       const response = await fetch("/api/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId,
-          rating,
-          comment,
-          author,
-        }),
+        body: JSON.stringify({ productId, rating, comment, author }),
       });
 
       if (!response.ok) {
@@ -49,7 +57,8 @@ export default function ReviewForm({
 
       setAuthor("");
       setComment("");
-      setRating(5);
+      setRating(0);
+      setHovered(0);
       setIsOpen(false);
       onReviewAdded();
     } catch (err) {
@@ -82,20 +91,46 @@ export default function ReviewForm({
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="rating">Rating</label>
-            <div className={styles.ratingSelect}>
+            <label id="rating-label">Rating</label>
+            <div
+              className={styles.ratingSelect}
+              role="radiogroup"
+              aria-labelledby="rating-label"
+            >
               {[1, 2, 3, 4, 5].map((star) => (
-                <label key={star} className={styles.starLabel}>
-                  <input
-                    type="radio"
-                    name="rating"
-                    value={star}
-                    checked={rating === star}
-                    onChange={(e) => setRating(Number.parseInt(e.target.value, 10))}
-                  />
-                  <span className={styles.starDisplay}>★</span>
-                </label>
+                <button
+                  key={star}
+                  type="button"
+                  role="radio"
+                  aria-checked={rating === star}
+                  aria-label={`${star} star${star > 1 ? "s" : ""} — ${RATING_LABELS[star - 1]}`}
+                  className={[
+                    styles.starBtn,
+                    star <= activeLevel ? styles.starActive : "",
+                    poppingStars.has(star) ? styles.starPop : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  onMouseEnter={() => setHovered(star)}
+                  onMouseLeave={() => setHovered(0)}
+                  onClick={() => handleStarClick(star)}
+                >
+                  <svg
+                    className={styles.starSvg}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                  </svg>
+                </button>
               ))}
+
+              {activeLevel > 0 && (
+                <span className={styles.ratingLabel} aria-live="polite">
+                  {RATING_LABELS[activeLevel - 1]}
+                </span>
+              )}
             </div>
           </div>
 

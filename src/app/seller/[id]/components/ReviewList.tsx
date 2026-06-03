@@ -89,14 +89,17 @@ export default function ReviewList({
                   })}
                 </p>
               </div>
-              <div className={styles.rating}>
+              <div className={styles.rating} aria-label={`${review.rating} out of 5 stars`}>
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <span
+                  <svg
                     key={i}
                     className={i < review.rating ? styles.starFilled : styles.starEmpty}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
                   >
-                    ★
-                  </span>
+                    <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                  </svg>
                 ))}
               </div>
             </div>

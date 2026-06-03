@@ -1,0 +1,173 @@
+.page {
+  background: linear-gradient(180deg, rgb(245 230 211 / 60%), var(--color-cream));
+  min-height: 100vh;
+}
+
+.hero {
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 4vw, 3rem);
+  background: radial-gradient(circle at top right, rgb(122 158 126 / 18%), transparent 50%),
+    radial-gradient(circle at top left, rgb(201 123 99 / 12%), transparent 40%);
+  border-bottom: 1px solid rgb(75 56 50 / 8%);
+}
+
+.eyebrow {
+  color: var(--color-terracotta);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  color: var(--color-brown);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  max-width: 52ch;
+  font-size: 1.05rem;
+  color: rgb(75 56 50 / 78%);
+  line-height: 1.7;
+}
+
+.grid_section {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.count {
+  font-size: 0.9rem;
+  color: rgb(75 56 50 / 60%);
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgb(75 56 50 / 10%);
+  border-radius: var(--radius-lg);
+  background: rgb(255 253 248 / 90%);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--color-sage);
+  outline: none;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+.avatarWrap {
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.avatarImg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgb(75 56 50 / 10%);
+}
+
+.avatarInitials {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-sage), #5e8562);
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-heading), "Poppins", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.cardBody {
+  flex: 1;
+}
+
+.sellerName {
+  font-size: 1.15rem;
+  color: var(--color-brown);
+  margin-bottom: 0.4rem;
+}
+
+.bio {
+  font-size: 0.9rem;
+  color: rgb(75 56 50 / 72%);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: rgb(75 56 50 / 70%);
+}
+
+.metaItem strong {
+  color: var(--color-brown);
+  font-weight: 600;
+}
+
+.star {
+  color: var(--color-terracotta);
+}
+
+.reviewCount {
+  color: rgb(75 56 50 / 55%);
+}
+
+.viewLink {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-sage);
+  align-self: flex-end;
+  transition: gap 0.15s ease;
+}
+
+.card:hover .viewLink {
+  text-decoration: underline;
+}
+
+.empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: rgb(75 56 50 / 55%);
+  font-size: 1.05rem;
+}

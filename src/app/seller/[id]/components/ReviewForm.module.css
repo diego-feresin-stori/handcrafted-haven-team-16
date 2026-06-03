@@ -10,7 +10,7 @@
   color: var(--color-sage);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .openButton:hover {
@@ -50,46 +50,93 @@
   font-size: 0.95rem;
   background: var(--color-cream);
   color: var(--color-brown);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 .formGroup input[type="text"]:focus,
 .formGroup textarea:focus {
   outline: none;
   border-color: var(--color-sage);
-  box-shadow: 0 0 0 3px rgb(122 158 126 / 10%);
+  box-shadow: 0 0 0 3px rgb(122 158 126 / 12%);
 }
 
 .formGroup textarea {
   resize: vertical;
 }
 
+/* ── Star rating ── */
+
 .ratingSelect {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 4px;
 }
 
-.starLabel {
+.starBtn {
+  background: none;
+  border: none;
+  padding: 4px;
   cursor: pointer;
-  font-size: 1.5rem;
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1);
+  outline: none;
 }
 
-.starLabel input {
-  display: none;
+.starBtn:focus-visible {
+  box-shadow: 0 0 0 3px rgb(122 158 126 / 30%);
 }
 
-.starLabel input:checked ~ .starDisplay,
-.starLabel:hover .starDisplay {
-  opacity: 1;
+.starBtn:hover {
+  transform: scale(1.18);
+}
+
+.starSvg {
+  width: 2rem;
+  height: 2rem;
+  polygon {
+    fill: rgb(75 56 50 / 12%);
+    stroke: rgb(75 56 50 / 20%);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    transition: fill 0.15s ease, stroke 0.15s ease;
+  }
+}
+
+.starActive .starSvg polygon {
+  fill: var(--color-terracotta);
+  stroke: var(--color-terracotta);
+}
+
+@keyframes starPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.55); }
+  70%  { transform: scale(0.9); }
+  85%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.starPop {
+  animation: starPop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.ratingLabel {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--color-terracotta);
+  min-width: 5rem;
+  animation: fadeSlideIn 0.18s ease both;
 }
 
-.starDisplay {
-  color: var(--color-terracotta);
-  opacity: 0.5;
-  transition: all 0.2s ease;
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
+
+/* ── Form actions ── */
 
 .error {
   padding: 0.75rem;
@@ -114,7 +161,7 @@
   border-radius: var(--radius-md);
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.18s ease, opacity 0.18s ease;
 }
 
 .submitButton {

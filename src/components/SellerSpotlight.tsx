@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./SellerSpotlight.module.css";
 
 export default function SellerSpotlight() {
@@ -22,6 +23,11 @@ export default function SellerSpotlight() {
             <li>List products with images, pricing, and descriptions</li>
             <li>Build trust through reviews and ratings</li>
           </ul>
+          <div className={styles.actions}>
+            <Link href="/sellers" className="buttonPrimary">
+              Browse all artisans
+            </Link>
+          </div>
         </div>
         <aside className={styles.quote} aria-label="Seller testimonial">
           <blockquote>

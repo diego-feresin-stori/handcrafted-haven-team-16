@@ -75,16 +75,32 @@
 
 .rating {
   display: flex;
-  gap: 0.2rem;
-  font-size: 1rem;
+  gap: 3px;
+  align-items: center;
 }
 
 .starFilled {
-  color: var(--color-terracotta);
+  width: 1rem;
+  height: 1rem;
+}
+
+.starFilled polygon {
+  fill: var(--color-terracotta);
+  stroke: var(--color-terracotta);
+  stroke-width: 1;
+  stroke-linejoin: round;
 }
 
 .starEmpty {
-  color: rgb(75 56 50 / 15%);
+  width: 1rem;
+  height: 1rem;
+}
+
+.starEmpty polygon {
+  fill: rgb(75 56 50 / 10%);
+  stroke: rgb(75 56 50 / 22%);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
 }
 
 .comment {
