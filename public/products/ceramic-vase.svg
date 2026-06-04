@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Terracotta glazed vase illustration">
-  <rect width="400" height="320" fill="#FFFDF8"/>
-  <ellipse cx="200" cy="280" rx="70" ry="12" fill="#F5E6D3"/>
-  <path d="M155 110 Q200 80 245 110 L230 250 Q200 270 170 250 Z" fill="#C97B63"/>
-  <path d="M165 120 Q200 95 235 120 L222 240 Q200 255 178 240 Z" fill="#7A9E7E" opacity="0.35"/>
-  <ellipse cx="200" cy="110" rx="45" ry="10" fill="#4B3832" opacity="0.15"/>
-</svg>

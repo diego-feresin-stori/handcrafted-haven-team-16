@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Hand-poured candle illustration">
-  <rect width="400" height="320" fill="#FFFDF8"/>
-  <rect x="165" y="120" width="70" height="130" rx="8" fill="#FFFDF8" stroke="#F5E6D3" stroke-width="4"/>
-  <rect x="172" y="145" width="56" height="95" rx="4" fill="#7A9E7E" opacity="0.55"/>
-  <rect x="195" y="105" width="10" height="24" rx="3" fill="#4B3832" opacity="0.5"/>
-  <ellipse cx="200" cy="108" rx="8" ry="10" fill="#C97B63" opacity="0.8"/>
-  <ellipse cx="200" cy="255" rx="55" ry="10" fill="#F5E6D3"/>
-</svg>
