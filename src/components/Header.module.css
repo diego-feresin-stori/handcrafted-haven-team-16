@@ -44,6 +44,64 @@
   border-bottom-color: var(--color-sage);
 }
 
+/* = Search Bar = */
+.searchForm {
+  flex: 1;
+  max-width: 380px;
+  margin-left: auto;
+}
+
+.searchWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 1rem;
+  padding-right: 3.25rem;
+  border: 2px solid var(--color-sage);
+  border-radius: var(--radius-md);
+  background: var(--color-cream);
+  font-size: 1rem;
+  color: var(--color-brown);
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-terracotta);
+  box-shadow: var(--shadow-sm);
+}
+
+.searchButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--color-terracotta);
+  transition: color 0.2s ease;
+}
+
+.searchButton:hover {
+  color: var(--color-brown);
+}
+
+/* = Responsive = */
+@media (max-width: 768px) {
+  .searchForm {
+    margin-left: 0;
+    max-width: 100%;
+    order: 3;
+    width: 100%;
+  }
+}
+
 @media (max-width: 480px) {
   .inner {
     flex-direction: column;

@@ -1,4 +1,8 @@
+'use client';
+
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 
 const navLinks = [
@@ -8,12 +12,24 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+    }
+  };
+
   return (
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.logo}>
           Handcrafted Haven
         </Link>
+
         <nav className={styles.nav} aria-label="Main navigation">
           <ul className={styles.navList}>
             {navLinks.map((link) => (
@@ -25,6 +41,27 @@ export default function Header() {
             ))}
           </ul>
         </nav>
+
+        {/* Search Bar */}
+        <form onSubmit={handleSearch} className={styles.searchForm}>
+          <div className={styles.searchWrapper}>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search products..."
+              className={styles.searchInput}
+              aria-label="Search products"
+            />
+            <button
+              type="submit"
+              className={styles.searchButton}
+              aria-label="Submit search"
+            >
+              🔍
+            </button>
+          </div>
+        </form>
       </div>
     </header>
   );
