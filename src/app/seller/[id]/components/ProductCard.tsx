@@ -37,6 +37,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               width={400}
               height={320}
               className={styles.image}
+              loading="eager"
             />
           </div>
           <div className={styles.cardBody}>
