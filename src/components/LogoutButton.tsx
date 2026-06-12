@@ -6,7 +6,10 @@ export default function LogoutButton() {
   const { logout } = useAuth();
 
   return (
-    <button onClick={logout}>
+    <button
+      className="buttonSecondary"
+      onClick={logout}
+    >
       Logout
     </button>
   );

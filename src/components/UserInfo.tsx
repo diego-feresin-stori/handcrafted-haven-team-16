@@ -11,9 +11,7 @@ export default function UserInfo() {
 
       {user ? (
         <>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
-          <p>{user.role}</p>
+          <p>Welcome, {user.name}</p>
         </>
       ) : (
         <p>No user logged in</p>
