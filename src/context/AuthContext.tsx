@@ -17,7 +17,7 @@ type User = {
 type AuthContextType = {
   user: User | null;
   loading: boolean;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext =
@@ -37,21 +37,41 @@ export function AuthProvider({
     useState(true);
 
   useEffect(() => {
-    const storedUser =
-      localStorage.getItem("user");
+    async function loadUser() {
+        try {
+        const response =
+            await fetch(
+            "/api/auth/me"
+            );
 
-    if (storedUser) {
-      setUser(
-        JSON.parse(storedUser)
-      );
+        const data =
+            await response.json();
+
+        setUser(data.user);
+        } catch (error) {
+        console.error(error);
+        } finally {
+        setLoading(false);
+        }
     }
 
-    setLoading(false);
-  }, []);
+    loadUser();
+    }, []);
 
-  const logout = () => {
-    localStorage.removeItem("user");
-
+  const logout = async () => {
+    try {
+      await fetch(
+        "/api/auth/logout",
+        {
+          method: "POST",
+        }
+      );
+    } catch (error) {
+      console.error(
+        "Logout failed:",
+        error
+      );
+    }
     setUser(null);
 
     window.location.href =

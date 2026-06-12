@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SellerSpotlight from "@/components/SellerSpotlight";
 import UserInfo from "@/components/UserInfo";
-import LogoutButton from "@/components/LogoutButton";
+import LogoutButton from "@/components/AuthButton";
 
 export default function Home() {
   return (

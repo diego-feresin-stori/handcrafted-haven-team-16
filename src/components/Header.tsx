@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
+import LogoutButton from "./AuthButton";
 
 const navLinks = [
   { href: "#shop", label: "Shop" },
@@ -23,6 +24,7 @@ export default function Header() {
                 </a>
               </li>
             ))}
+            <li><LogoutButton/></li>
           </ul>
         </nav>
       </div>
