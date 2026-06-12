@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
+import styles from "../auth.module.css";
 
 export default function LoginPage() {
   const [email, setEmail] =
@@ -53,9 +55,7 @@ export default function LoginPage() {
       );
 
       window.location.href = "/";
-    } catch (error) {
-      console.error(error);
-
+    } catch {
       setError(
         "Something went wrong."
       );
@@ -65,14 +65,35 @@ export default function LoginPage() {
   };
 
   return (
-    <main>
-      <h1>Login</h1>
+    <>
+      <p className={styles.badge}>
+        HANDCRAFTED HAVEN
+      </p>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
+      <h1 className={styles.title}>
+        Welcome Back
+      </h1>
+
+      <p className={styles.subtitle}>
+        Sign in to continue exploring
+        handcrafted products.
+      </p>
+
+      <form
+        onSubmit={handleSubmit}
+        className={styles.form}
+      >
+        <div
+          className={
+            styles.formGroup
+          }
+        >
+          <label htmlFor="email">
+            Email
+          </label>
 
           <input
+            id="email"
             type="email"
             value={email}
             onChange={(e) =>
@@ -84,10 +105,17 @@ export default function LoginPage() {
           />
         </div>
 
-        <div>
-          <label>Password</label>
+        <div
+          className={
+            styles.formGroup
+          }
+        >
+          <label htmlFor="password">
+            Password
+          </label>
 
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(e) =>
@@ -100,18 +128,32 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <p>{error}</p>
+          <p
+            className={
+              styles.error
+            }
+          >
+            {error}
+          </p>
         )}
 
         <button
           type="submit"
           disabled={loading}
+          className={`buttonPrimary ${styles.submitButton}`}
         >
           {loading
             ? "Signing In..."
-            : "Login"}
+            : "Sign In"}
         </button>
       </form>
-    </main>
+
+      <p className={styles.authLink}>
+        Need an account?{" "}
+        <Link href="/register">
+          Register
+        </Link>
+      </p>
+    </>
   );
 }

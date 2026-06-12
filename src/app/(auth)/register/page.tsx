@@ -1,74 +1,93 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
+import styles from "../auth.module.css";
 
 export default function RegisterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] =
+    useState("");
 
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const [error, setError] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(false);
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
-    ) => {
-        e.preventDefault();
+  ) => {
+    e.preventDefault();
 
-        setError("");
-        setLoading(true);
+    setError("");
+    setLoading(true);
 
-        try {
-        const response = await fetch(
-            "/api/auth/register",
-            {
-            method: "POST",
-            headers: {
-                "Content-Type":
-                "application/json",
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                password,
-            }),
-            }
-        );
-
-        const data =
-            await response.json();
-
-        if (!response.ok) {
-            setError(
-            data.error ||
-                "Registration failed"
-            );
-            return;
+    try {
+      const response = await fetch(
+        "/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+          }),
         }
+      );
 
-        alert(
-            "Account created successfully!"
-        );
+      const data =
+        await response.json();
 
-        window.location.href =
-            "/login";
-        } catch (error) {
-        console.error(error);
+      if (!response.ok) {
+        setError(data.error);
+        return;
+      }
 
-        setError(
-            "Something went wrong. Please try again."
-        );
-        } finally {
-        setLoading(false);
-        }
-    };
+      window.location.href =
+        "/login";
+    } catch {
+      setError(
+        "Something went wrong."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <main>
-      <h1>Create Account</h1>
+    <>
+      <p className={styles.badge}>
+        HANDCRAFTED HAVEN
+      </p>
 
-      <form onSubmit={handleSubmit}>
-        <div>
+      <h1 className={styles.title}>
+        Create Account
+      </h1>
+
+      <p className={styles.subtitle}>
+        Join our community of makers
+        and mindful shoppers.
+      </p>
+
+      <form
+        onSubmit={handleSubmit}
+        className={styles.form}
+      >
+        <div
+          className={
+            styles.formGroup
+          }
+        >
           <label htmlFor="name">
             Name
           </label>
@@ -86,7 +105,11 @@ export default function RegisterPage() {
           />
         </div>
 
-        <div>
+        <div
+          className={
+            styles.formGroup
+          }
+        >
           <label htmlFor="email">
             Email
           </label>
@@ -104,7 +127,11 @@ export default function RegisterPage() {
           />
         </div>
 
-        <div>
+        <div
+          className={
+            styles.formGroup
+          }
+        >
           <label htmlFor="password">
             Password
           </label>
@@ -123,18 +150,32 @@ export default function RegisterPage() {
         </div>
 
         {error && (
-          <p>{error}</p>
+          <p
+            className={
+              styles.error
+            }
+          >
+            {error}
+          </p>
         )}
 
         <button
           type="submit"
           disabled={loading}
+          className={`buttonPrimary ${styles.submitButton}`}
         >
           {loading
             ? "Creating Account..."
-            : "Register"}
+            : "Create Account"}
         </button>
       </form>
-    </main>
+
+      <p className={styles.authLink}>
+        Already have an account?{" "}
+        <Link href="/login">
+          Sign In
+        </Link>
+      </p>
+    </>
   );
 }
