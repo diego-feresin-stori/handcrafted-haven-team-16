@@ -1,59 +1,79 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { featuredProducts, type Product } from '@/lib/placeholder-products';
 import Link from 'next/link';
 
-const placeholderProducts = [
-  { id: 1, name: "Wooden Cutting Board", category: "Kitchen", price: 45 },
-  { id: 2, name: "Ceramic Mug Set", category: "Home", price: 32 },
-  { id: 3, name: "Leather Journal", category: "Stationery", price: 28 },
-  { id: 4, name: "Handwoven Basket", category: "Home", price: 55 },
-  { id: 5, name: "Wood Carving Set", category: "Art", price: 65 },
-];
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const query = q?.toLowerCase().trim() || '';
 
-export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('q')?.toLowerCase() || '';
-  
-  const [results, setResults] = useState(placeholderProducts);
+  let results: Product[] = featuredProducts;
 
-  useEffect(() => {
-    if (query) {
-      const filtered = placeholderProducts.filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query)
-      );
-      setResults(filtered);
-    }
-  }, [query]);
+  if (query) {
+    results = featuredProducts.filter((product) =>
+      product.name.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query) ||
+      product.alt.toLowerCase().includes(query)
+    );
+  }
 
   return (
     <div className="section">
       <div className="container">
         <h1 className="sectionTitle">
-          Search Results for "{query || 'all products'}"
+          {query ? `Search Results for "${q}"` : "All Products"}
         </h1>
 
+        <p className="sectionSubtitle" style={{ marginBottom: '2rem' }}>
+          Found {results.length} product{results.length !== 1 ? 's' : ''}
+        </p>
+
         {results.length === 0 ? (
-          <p>No products found for "{query}". Try different keywords.</p>
+          <div style={{ textAlign: 'center', padding: '4rem 0' }}>
+            <p>No products found for "{q}". Try different keywords.</p>
+          </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '2rem', marginTop: '2rem' }}>
-            {results.map(product => (
-              <div key={product.id} style={{
-                border: '1px solid #ddd',
-                borderRadius: '12px',
-                padding: '1.5rem',
-                background: 'white'
-              }}>
-                <h3>{product.name}</h3>
-                <p>Category: {product.category}</p>
-                <p style={{ fontWeight: 'bold', color: 'var(--color-terracotta)' }}>
-                  ${product.price}
-                </p>
-                <Link href={`/products/${product.id}`} style={{ color: 'var(--color-sage)' }}>
-                  View Details →
-                </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {results.map((product) => (
+              <div
+                key={product.id}
+                className="group border border-gray-200 rounded-2xl overflow-hidden hover:shadow-md transition-all duration-300 bg-white"
+              >
+                <div className="h-64 bg-gray-100 relative flex items-center justify-center overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.alt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="eager"
+                  />
+                </div>
+
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-semibold">{product.name}</h3>
+                    <span className="text-sm font-medium text-[var(--color-sage)]">
+                      {product.category}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1 mb-4">
+                    {'★'.repeat(Math.floor(product.rating))}
+                    <span className="text-sm text-gray-500">({product.rating})</span>
+                  </div>
+
+                  <p className="text-3xl font-bold text-[var(--color-terracotta)] mb-6">
+                    ${product.price}
+                  </p>
+
+                  <Link
+                    href={`/products/${product.id}`}
+                    className="block w-full text-center py-3 border-2 border-[var(--color-sage)] text-[var(--color-sage)] font-medium rounded-xl hover:bg-[var(--color-sage)] hover:text-white transition-colors"
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
