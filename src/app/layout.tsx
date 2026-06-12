@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { openSans, poppins } from "./fonts";
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: {
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} ${openSans.variable}`}>
       <body className={openSans.className}>
-        <a href="#main-content" className="skipLink">
-          Skip to main content
-        </a>
-        {children}
+        <AuthProvider>
+          <a href="#main-content" className="skipLink">
+            Skip to main content
+          </a>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
