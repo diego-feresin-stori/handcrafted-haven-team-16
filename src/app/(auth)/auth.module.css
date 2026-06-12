@@ -117,3 +117,45 @@
 .authLink a:hover {
   text-decoration: underline;
 }
+
+.formGroup select {
+  padding: 0.9rem 1rem;
+
+  border: 1px solid rgb(75 56 50 / 15%);
+
+  border-radius: var(--radius-md);
+
+  font-size: 1rem;
+
+  background: var(--color-white);
+
+  color: var(--color-brown);
+
+  cursor: pointer;
+
+  transition: border-color 0.2s ease;
+}
+
+.formGroup select:focus {
+  border-color: var(--color-sage);
+}
+
+.formGroup textarea {
+  padding: 0.9rem 1rem;
+
+  border: 1px solid rgb(75 56 50 / 15%);
+
+  border-radius: var(--radius-md);
+
+  font-size: 1rem;
+
+  min-height: 120px;
+
+  resize: vertical;
+
+  font-family: inherit;
+}
+
+.formGroup textarea:focus {
+  border-color: var(--color-sage);
+}

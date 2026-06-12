@@ -5,10 +5,21 @@ import { useState } from "react";
 import styles from "../auth.module.css";
 
 export default function RegisterPage() {
-  const [name, setName] =
-    useState("");
+  const [name, setName] = useState("");
 
   const [email, setEmail] =
+    useState("");
+
+  const [role, setRole] =
+    useState("customer");
+
+  const [bio, setBio] =
+    useState("");
+
+  const [story, setStory] =
+    useState("");
+
+  const [imageUrl, setImageUrl] =
     useState("");
 
   const [password, setPassword] =
@@ -41,6 +52,10 @@ export default function RegisterPage() {
             name,
             email,
             password,
+            role,
+            bio,
+            story,
+            imageUrl,
           }),
         }
       );
@@ -83,11 +98,7 @@ export default function RegisterPage() {
         onSubmit={handleSubmit}
         className={styles.form}
       >
-        <div
-          className={
-            styles.formGroup
-          }
-        >
+        <div className={styles.formGroup}>
           <label htmlFor="name">
             Name
           </label>
@@ -105,11 +116,7 @@ export default function RegisterPage() {
           />
         </div>
 
-        <div
-          className={
-            styles.formGroup
-          }
-        >
+        <div className={styles.formGroup}>
           <label htmlFor="email">
             Email
           </label>
@@ -127,11 +134,102 @@ export default function RegisterPage() {
           />
         </div>
 
-        <div
-          className={
-            styles.formGroup
-          }
-        >
+        <div className={styles.formGroup}>
+          <label htmlFor="role">
+            Join As
+          </label>
+
+          <select
+            id="role"
+            value={role}
+            onChange={(e) =>
+              setRole(
+                e.target.value
+              )
+            }
+          >
+            <option value="customer">
+              Customer
+            </option>
+
+            <option value="seller">
+              Seller
+            </option>
+          </select>
+        </div>
+
+        {role === "seller" && (
+          <>
+            <div
+              className={
+                styles.formGroup
+              }
+            >
+              <label htmlFor="bio">
+                Seller Bio
+              </label>
+
+              <input
+                id="bio"
+                type="text"
+                value={bio}
+                onChange={(e) =>
+                  setBio(
+                    e.target.value
+                  )
+                }
+                placeholder="Short description about yourself"
+                required
+              />
+            </div>
+
+            <div
+              className={
+                styles.formGroup
+              }
+            >
+              <label htmlFor="story">
+                Your Story
+              </label>
+
+              <textarea
+                id="story"
+                value={story}
+                onChange={(e) =>
+                  setStory(
+                    e.target.value
+                  )
+                }
+                placeholder="Tell customers about your craft journey"
+                required
+              />
+            </div>
+
+            <div
+              className={
+                styles.formGroup
+              }
+            >
+              <label htmlFor="imageUrl">
+                Profile Image URL
+              </label>
+
+              <input
+                id="imageUrl"
+                type="text"
+                value={imageUrl}
+                onChange={(e) =>
+                  setImageUrl(
+                    e.target.value
+                  )
+                }
+                placeholder="/images/profile.jpg"
+              />
+            </div>
+          </>
+        )}
+
+        <div className={styles.formGroup}>
           <label htmlFor="password">
             Password
           </label>
@@ -150,11 +248,7 @@ export default function RegisterPage() {
         </div>
 
         {error && (
-          <p
-            className={
-              styles.error
-            }
-          >
+          <p className={styles.error}>
             {error}
           </p>
         )}
