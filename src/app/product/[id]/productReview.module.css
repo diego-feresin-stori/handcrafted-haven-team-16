@@ -119,6 +119,7 @@
   line-height: 1.7;
   color: rgb(75 56 50 / 80%);
   max-width: 46ch;
+  padding-left: 20px;
 }
 
 .sellerLink {
