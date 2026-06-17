@@ -1,0 +1,161 @@
+.authPage {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem;
+
+  background: linear-gradient(
+    90deg,
+    var(--color-beige),
+    var(--color-cream)
+  );
+}
+
+.authCard {
+  width: 100%;
+  max-width: 32rem;
+
+  background: var(--color-white);
+
+  padding: 2.5rem;
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-md);
+}
+
+.badge {
+  text-align: center;
+
+  color: var(--color-sage);
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+  margin-bottom: 1rem;
+}
+
+.title {
+  text-align: center;
+
+  margin-bottom: 0.75rem;
+
+  font-size: 2rem;
+}
+
+.subtitle {
+  text-align: center;
+
+  margin-bottom: 2rem;
+
+  color: rgb(75 56 50 / 75%);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  margin-bottom: 0.4rem;
+
+  font-weight: 600;
+}
+
+.formGroup input {
+  padding: 0.9rem 1rem;
+
+  border: 1px solid rgb(75 56 50 / 15%);
+
+  border-radius: var(--radius-md);
+
+  font-size: 1rem;
+
+  transition: border-color 0.2s ease;
+}
+
+.formGroup input:focus {
+  border-color: var(--color-sage);
+}
+
+.error {
+  color: #c0392b;
+
+  margin-bottom: 1rem;
+
+  text-align: center;
+}
+
+.submitButton {
+  width: 100%;
+}
+
+.authLink {
+  margin-top: 1.5rem;
+
+  text-align: center;
+}
+
+.authLink a {
+  color: var(--color-terracotta);
+
+  font-weight: 600;
+}
+
+.authLink a:hover {
+  text-decoration: underline;
+}
+
+.formGroup select {
+  padding: 0.9rem 1rem;
+
+  border: 1px solid rgb(75 56 50 / 15%);
+
+  border-radius: var(--radius-md);
+
+  font-size: 1rem;
+
+  background: var(--color-white);
+
+  color: var(--color-brown);
+
+  cursor: pointer;
+
+  transition: border-color 0.2s ease;
+}
+
+.formGroup select:focus {
+  border-color: var(--color-sage);
+}
+
+.formGroup textarea {
+  padding: 0.9rem 1rem;
+
+  border: 1px solid rgb(75 56 50 / 15%);
+
+  border-radius: var(--radius-md);
+
+  font-size: 1rem;
+
+  min-height: 120px;
+
+  resize: vertical;
+
+  font-family: inherit;
+}
+
+.formGroup textarea:focus {
+  border-color: var(--color-sage);
+}
