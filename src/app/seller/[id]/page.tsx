@@ -3,8 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sql } from "@/lib/db";
-import ProductCard from "./components/ProductCard";
 import styles from "./sellerProfile.module.css";
+import { Suspense } from "react";
+import ProductsSection from "./components/ProductsSection";
+import ProductsSkeleton from "./components/ProductsSkeleton";
+
+
 
 type SellerRow = {
   id: string;
@@ -17,19 +21,21 @@ type SellerRow = {
   review_count: number;
 };
 
-type SellerProduct = {
+type SellerCategory = {
   id: string;
   name: string;
-  category: string;
-  price: number;
-  image_url: string;
-  avg_rating: number | null;
 };
+
 
 type SellerPageProps = {
   params: Promise<{
     id: string;
   }>;
+  searchParams: Promise<{
+    category?: string;
+    sort?: string;
+  }>;
+  
 };
 
 function getInitials(name: string) {
@@ -59,24 +65,19 @@ async function getSellerById(sellerId: string): Promise<SellerRow | null> {
 
   return rows[0] ?? null;
 }
-
-async function getSellerProducts(sellerId: string): Promise<SellerProduct[]> {
-  return sql<SellerProduct[]>`
-    SELECT
-      p.id,
-      p.name,
-      c.name AS category,
-      p.price,
-      p.image_url,
-      ROUND(AVG(r.rating)::numeric, 1)::float8 AS avg_rating
+async function getCategoriesBySellerId(sellerId: string): Promise<SellerCategory[]> {
+  return sql<SellerCategory[]>`
+    SELECT DISTINCT
+      c.id,
+      c.name
     FROM products p
     JOIN categories c ON c.id = p.category_id
-    LEFT JOIN reviews r ON r.product_id = p.id
     WHERE p.seller_id = ${sellerId}
-    GROUP BY p.id, p.name, c.name, p.price, p.image_url, p.created_at
-    ORDER BY p.created_at DESC
   `;
 }
+
+
+
 
 export async function generateMetadata({
   params,
@@ -99,20 +100,23 @@ export async function generateMetadata({
   }
 }
 
-export default async function SellerProfilePage({ params }: SellerPageProps) {
+export default async function SellerProfilePage({ params, searchParams }: SellerPageProps) {
   const { id } = await params;
+  const { category, sort } = await searchParams;
+  const categories = await getCategoriesBySellerId(id);
+
+
 
   let seller: SellerRow | null = null;
-  let sellerProducts: SellerProduct[] = [];
+
 
   try {
-    const [sellerResult, productsResult] = await Promise.all([
+    const [sellerResult,] = await Promise.all([
       getSellerById(id),
-      getSellerProducts(id),
     ]);
 
     seller = sellerResult;
-    sellerProducts = productsResult;
+
   } catch {
     notFound();
   }
@@ -193,13 +197,19 @@ export default async function SellerProfilePage({ params }: SellerPageProps) {
                   <dd>{seller.location}</dd>
                 </div>
               )}
+
               <div className={styles.summaryItem}>
                 <dt>Products</dt>
-                <dd>{sellerProducts.length}</dd>
+                <dd>Loading...</dd>
               </div>
+
               <div className={styles.summaryItem}>
                 <dt>Rating</dt>
-                <dd>{seller.avg_rating !== null ? seller.avg_rating.toFixed(1) : "N/A"}</dd>
+                <dd>
+                  {seller.avg_rating !== null
+                    ? seller.avg_rating.toFixed(1)
+                    : "N/A"}
+                </dd>
               </div>
             </dl>
           </aside>
@@ -221,26 +231,68 @@ export default async function SellerProfilePage({ params }: SellerPageProps) {
                 Products and ratings are loaded from the shared PostgreSQL database.
               </p>
             </div>
-            <p
-              className={styles.productCount}
-              aria-label={`${sellerProducts.length} products listed`}
-            >
-              {sellerProducts.length} listed products
-            </p>
-          </div>
+            <div className={styles.toolbar}>
 
-          {sellerProducts.length > 0 ? (
-            <ul className={styles.grid} aria-label={`${seller.name} products`}>
-              {sellerProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </ul>
-          ) : (
-            <div className={styles.emptyState} role="status" aria-live="polite">
-              <h3>No products are listed yet.</h3>
-              <p>This seller profile exists, but there are no products assigned yet.</p>
+              <form className={styles.filters}>
+
+                <select
+                  name="category"
+                  defaultValue={category ?? ""}
+                  
+                >
+                  <option value="">
+                    All categories
+                  </option>
+
+                  {categories.map((cat) => (
+                    <option
+                      key={cat.id}
+                      value={cat.id}
+                    >
+                      {cat.name}
+                    </option>
+                  ))}
+
+                </select>
+
+                <select
+                  name="sort"
+                  defaultValue={sort ?? ""}
+                >
+                  <option value="">
+                    Sort by Price
+                  </option>
+
+                  <option value="price_asc">
+                    Low to High
+                  </option>
+
+                  <option value="price_desc">
+                    High to Low
+                  </option>
+
+                </select>
+
+                <button type="submit">
+                  Apply filters
+                </button>
+
+              </form>
+
             </div>
-          )}
+          </div>
+          <Suspense
+            key={`${category}-${sort}`}
+            fallback={<ProductsSkeleton />}
+          >
+            <ProductsSection
+              sellerId={id}
+              sellerName={seller.name}
+              category={category}
+              sort={sort}
+            />
+          </Suspense>
+
         </div>
       </section>
     </main>

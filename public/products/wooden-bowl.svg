@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Wooden bowl illustration">
-  <rect width="400" height="320" fill="#FFFDF8"/>
-  <ellipse cx="200" cy="250" rx="95" ry="18" fill="#F5E6D3"/>
-  <ellipse cx="200" cy="170" rx="95" ry="35" fill="#C97B63" opacity="0.75"/>
-  <ellipse cx="200" cy="165" rx="75" ry="22" fill="#4B3832" opacity="0.2"/>
-  <path d="M105 170 Q200 210 295 170 L280 220 Q200 255 120 220 Z" fill="#7A9E7E" opacity="0.35"/>
-</svg>

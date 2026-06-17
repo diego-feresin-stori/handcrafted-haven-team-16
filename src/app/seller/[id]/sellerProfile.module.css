@@ -249,15 +249,6 @@
   text-transform: uppercase;
 }
 
-.productCount {
-  padding: 0.65rem 0.95rem;
-  border: 1px solid rgb(75 56 50 / 12%);
-  border-radius: 999px;
-  background: var(--color-cream);
-  box-shadow: var(--shadow-sm);
-  font-weight: 600;
-  white-space: nowrap;
-}
 
 .grid {
   display: grid;
@@ -404,3 +395,179 @@
   height: 100%;
   object-fit: cover;
 }
+
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.productCount {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-brown);
+  white-space: nowrap;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filterSelect {
+  min-width: 180px;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgb(75 56 50 / 12%);
+  background: white;
+  font-size: 0.95rem;
+  color: var(--color-brown);
+  cursor: pointer;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--color-sage);
+  box-shadow:
+    0 0 0 4px rgb(122 146 122 / 12%);
+}
+
+.filterButton {
+  padding: 0.85rem 1.3rem;
+  border: none;
+  border-radius: 14px;
+  background: var(--color-sage);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.filterButton:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .filterSelect,
+  .filterButton {
+    width: 100%;
+  }
+
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.productCount {
+  font-size: 0.95rem;
+  color: rgb(75 56 50 / 70%);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/*FILTERS */
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  min-width: 180px;
+  height: 44px;
+  padding: 0 1rem;
+  border: 1px solid rgb(75 56 50 / 12%);
+  border-radius: 12px;
+  background: white;
+  color: var(--color-brown);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.filters select:hover {
+  border-color: var(--color-sage);
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: var(--color-sage);
+  box-shadow:
+    0 0 0 4px
+    rgb(139 165 132 / 12%);
+}
+
+.filters button {
+  height: 44px;
+  padding: 0 1.25rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-sage);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
+}
+
+.filters button:hover {
+  opacity: .92;
+  transform: translateY(-1px);
+}
+
+/*  SKELETON */
+
+.skeletonCard {
+  height: 320px;
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      90deg,
+      #f3f3f3 25%,
+      #fafafa 50%,
+      #f3f3f3 75%
+    );
+
+  background-size: 300%;
+  animation:
+    shimmer 1.3s infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100%;
+  }
+  to {
+    background-position: -100%;
+  }
+}
+

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" role="img" aria-label="Textile scarf illustration">
-  <rect width="400" height="320" fill="#FFFDF8"/>
-  <path d="M110 90 L290 130 L250 250 L70 210 Z" fill="#F5E6D3"/>
-  <path d="M130 105 L270 135 L240 230 L100 200 Z" fill="#C97B63" opacity="0.45"/>
-  <path d="M145 120 L255 140 L230 215 L120 195 Z" fill="#7A9E7E" opacity="0.35"/>
-  <path d="M110 90 L290 130" stroke="#4B3832" stroke-width="2" opacity="0.15"/>
-  <path d="M70 210 L250 250" stroke="#4B3832" stroke-width="2" opacity="0.15"/>
-</svg>

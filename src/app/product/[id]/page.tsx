@@ -109,8 +109,7 @@ export default async function ProductReviewPage({ params }: ProductPageProps) {
               <Image
                 src={product.image_url}
                 alt={product.name}
-                width={480}
-                height={380}
+                fill
                 className={styles.productImage}
                 priority
               />
