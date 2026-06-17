@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { getJwtSecret } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
 export async function POST(
@@ -73,7 +74,7 @@ export async function POST(
         email: user.email,
         role: user.role,
       },
-      process.env.JWT_SECRET!,
+      getJwtSecret(),
       {
         expiresIn: "7d",
       }
