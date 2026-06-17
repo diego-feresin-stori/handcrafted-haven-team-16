@@ -1,5 +1,41 @@
-import { featuredProducts, type Product } from '@/lib/placeholder-products';
-import Link from 'next/link';
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { searchProducts, type SearchProduct } from "@/lib/products";
+import styles from "./search.module.css";
+
+const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 0,
+});
+
+function formatPrice(price: number) {
+  return currencyFormatter.format(Number(price));
+}
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}): Promise<Metadata> {
+  const { q } = await searchParams;
+  const query = q?.trim();
+
+  if (query) {
+    return {
+      title: `Search results for "${query}"`,
+      description: `Browse handcrafted products matching "${query}" on Handcrafted Haven.`,
+    };
+  }
+
+  return {
+    title: "Search products",
+    description: "Browse all handcrafted products on Handcrafted Haven.",
+  };
+}
 
 export default async function SearchPage({
   searchParams,
@@ -7,78 +43,97 @@ export default async function SearchPage({
   searchParams: Promise<{ q?: string }>;
 }) {
   const { q } = await searchParams;
-  const query = q?.toLowerCase().trim() || '';
+  const query = q?.trim() ?? "";
 
-  let results: Product[] = featuredProducts;
+  let results: SearchProduct[] = [];
+  let hasError = false;
 
-  if (query) {
-    results = featuredProducts.filter((product) =>
-      product.name.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query) ||
-      product.alt.toLowerCase().includes(query)
-    );
+  try {
+    results = await searchProducts(query);
+  } catch {
+    hasError = true;
   }
 
   return (
-    <div className="section">
-      <div className="container">
-        <h1 className="sectionTitle">
-          {query ? `Search Results for "${q}"` : "All Products"}
-        </h1>
+    <>
+      <Header />
+      <main id="main-content" className={`section ${styles.page}`}>
+        <div className="container">
+          <h1 className="sectionTitle">
+            {query ? `Search results for "${q}"` : "All products"}
+          </h1>
 
-        <p className="sectionSubtitle" style={{ marginBottom: '2rem' }}>
-          Found {results.length} product{results.length !== 1 ? 's' : ''}
-        </p>
+          <p className={`sectionSubtitle ${styles.subtitle}`} aria-live="polite">
+            {hasError
+              ? "Unable to load products right now."
+              : `Found ${results.length} product${results.length !== 1 ? "s" : ""}`}
+          </p>
 
-        {results.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '4rem 0' }}>
-            <p>No products found for "{q}". Try different keywords.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {results.map((product) => (
-              <div
-                key={product.id}
-                className="group border border-gray-200 rounded-2xl overflow-hidden hover:shadow-md transition-all duration-300 bg-white"
-              >
-                <div className="h-64 bg-gray-100 relative flex items-center justify-center overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="eager"
-                  />
-                </div>
-
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-semibold">{product.name}</h3>
-                    <span className="text-sm font-medium text-[var(--color-sage)]">
-                      {product.category}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-1 mb-4">
-                    {'★'.repeat(Math.floor(product.rating))}
-                    <span className="text-sm text-gray-500">({product.rating})</span>
-                  </div>
-
-                  <p className="text-3xl font-bold text-[var(--color-terracotta)] mb-6">
-                    ${product.price}
-                  </p>
-
+          {hasError ? (
+            <div className={styles.error} role="alert">
+              <p>Something went wrong while searching the catalog. Please try again later.</p>
+            </div>
+          ) : results.length === 0 ? (
+            <div className={styles.empty} role="status">
+              <p>
+                {query
+                  ? `No products found for "${q}". Try different keywords.`
+                  : "No products are listed yet."}
+              </p>
+            </div>
+          ) : (
+            <ul className={styles.grid} aria-label="Search results">
+              {results.map((product) => (
+                <li key={product.id}>
                   <Link
-                    href={`/products/${product.id}`}
-                    className="block w-full text-center py-3 border-2 border-[var(--color-sage)] text-[var(--color-sage)] font-medium rounded-xl hover:bg-[var(--color-sage)] hover:text-white transition-colors"
+                    href={`/product/${product.id}`}
+                    className={styles.cardLink}
+                    aria-label={`View ${product.name}`}
                   >
-                    View Details
+                    <article className={styles.card}>
+                      <div className={styles.imageWrap}>
+                        <Image
+                          src={product.image_url}
+                          alt={product.name}
+                          width={400}
+                          height={320}
+                          className={styles.image}
+                        />
+                      </div>
+
+                      <div className={styles.details}>
+                        <p className={styles.category}>{product.category}</p>
+                        <h2 className={styles.name}>{product.name}</h2>
+
+                        <div className={styles.meta}>
+                          <span className={styles.price}>{formatPrice(product.price)}</span>
+                          <span
+                            className={styles.rating}
+                            aria-label={
+                              product.avg_rating !== null
+                                ? `Rated ${product.avg_rating.toFixed(1)} out of 5`
+                                : "No ratings yet"
+                            }
+                          >
+                            {product.avg_rating !== null
+                              ? `★ ${product.avg_rating.toFixed(1)}`
+                              : "No ratings"}
+                          </span>
+                        </div>
+
+                        <span className={styles.viewLink} aria-hidden="true">
+                          View details →
+                        </span>
+                      </div>
+                    </article>
                   </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }
