@@ -42,7 +42,7 @@ export const featuredProducts: Product[] = [
     category: "Woodwork",
     price: 68.80,
     rating: 4.7,
-    image: "/products/wooden-bowl.jpg",
+    image: "/products/olive-wood.png",
     alt: "Smooth olive wood serving bowl with visible grain",
   },
   {
