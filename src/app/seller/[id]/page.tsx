@@ -7,6 +7,7 @@ import styles from "./sellerProfile.module.css";
 import { Suspense } from "react";
 import ProductsSection from "./components/ProductsSection";
 import ProductsSkeleton from "./components/ProductsSkeleton";
+export const revalidate = 0;
 
 
 
