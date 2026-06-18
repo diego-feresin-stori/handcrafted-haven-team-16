@@ -17,6 +17,7 @@ type SellerRow = {
   story: string | null;
   image_url: string | null;
   location: string | null;
+  product_count: number;
   avg_rating: number | null;
   review_count: number;
 };
@@ -52,6 +53,7 @@ async function getSellerById(sellerId: string): Promise<SellerRow | null> {
       sp.story,
       sp.image_url,
       NULL::text AS location,
+      COUNT(DISTINCT p.id)::int AS product_count,
       ROUND(AVG(r.rating)::numeric, 1)::float8 AS avg_rating,
       COUNT(r.id)::int AS review_count
     FROM seller_profiles sp
@@ -200,7 +202,10 @@ export default async function SellerProfilePage({ params, searchParams }: Seller
 
               <div className={styles.summaryItem}>
                 <dt>Products</dt>
-                <dd>Loading...</dd>
+                <dd>
+                  {seller.product_count} product
+                  {seller.product_count !== 1 ? "s" : ""}
+                </dd>
               </div>
 
               <div className={styles.summaryItem}>
